@@ -5,6 +5,7 @@ import Modal, {
   ModalHeader,
   ModalTitle,
 } from "@atlaskit/modal-dialog";
+import Label from "@atlaskit/form";
 import TextField from "@atlaskit/textfield";
 import Select from "@atlaskit/select";
 import TextArea from "@atlaskit/textarea";
@@ -45,8 +46,8 @@ export const UpdateIssueModal = ({
       fields: {
         summary: updatedFields.summary,
         description: updatedFields.description,
-        status: updatedFields.status.value,
-        assignee: updatedFields.assignee?.value || null,
+        status: updatedFields.status.label,
+        assignee: updatedFields.assignee?.value,
       },
     });
   };
@@ -60,21 +61,25 @@ export const UpdateIssueModal = ({
       </ModalHeader>
       <ModalBody>
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <TextField
-            name="summary"
-            label="Summary"
-            value={updatedFields.summary}
-            onChange={(e) => handleFieldChange("summary", e.target.value)}
-            isRequired
-          />
-
-          <TextArea
-            name="description"
-            label="Description"
-            value={updatedFields.description}
-            onChange={(e) => handleFieldChange("description", e.target.value)}
-          />
-
+          <div>
+            <Label htmlFor="summary">Summary</Label>
+            <TextField
+              name="summary"
+              id="Summary"
+              value={updatedFields.summary}
+              onChange={(e) => handleFieldChange("summary", e.target.value)}
+              isRequired
+            />
+          </div>
+          <div>
+            <Label htmlFor="description">Description</Label>
+            <TextArea
+              name="description"
+              id="description"
+              value={updatedFields.description}
+              onChange={(e) => handleFieldChange("description", e.target.value)}
+            />
+          </div>
           <Select
             name="status"
             options={statusOptions}
