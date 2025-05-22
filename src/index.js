@@ -1,9 +1,10 @@
 import Resolver from "@forge/resolver";
 import { fetchProjects } from "./api/fetchProjects";
 import { fetchIssues } from "./api/fetchIssues";
-import { deleteIssue } from "./api/deleteIssue";
+import { deleteIssue, deleteIssueWithSubtasks } from "./api/deleteIssue";
 import { updateIssue } from "./api/updateIssue";
 import api, { route } from "@forge/api";
+import { fetchStatuses } from "./api/fetchStatuses";
 
 const resolver = new Resolver();
 
@@ -19,6 +20,11 @@ resolver.define("fetchIssues", async ({ payload }) => {
 resolver.define("deleteIssue", async ({ payload }) => {
   const { issueId } = payload;
   return await deleteIssue(issueId);
+});
+
+resolver.define("deleteIssueWithSubtasks", async ({ payload }) => {
+  const { issueId } = payload;
+  return await deleteIssueWithSubtasks(issueId);
 });
 
 resolver.define("updateIssue", async ({ payload }) => {
@@ -63,7 +69,6 @@ resolver.define("isAppEnabled", async ({ payload, context }) => {
 
 resolver.define("fetchProjectRoles", async ({ payload }) => {
   const { projectId } = payload;
-  console.log("Fetching project roles for project:", projectId);
   try {
     const response = await api
       .asApp()
@@ -108,7 +113,6 @@ resolver.define("fetchUsersForRole", async ({ payload }) => {
     }
 
     const roleData = await response.json();
-    console.log("roleData:", roleData);
     return roleData.actors.map((actor) => ({
       displayName: actor.displayName,
       accountId: actor.actorUser?.accountId || null,
@@ -117,6 +121,11 @@ resolver.define("fetchUsersForRole", async ({ payload }) => {
     console.error("Failed to fetch users for role:", err);
     throw err;
   }
+});
+
+resolver.define("fetchStatuses", async ({ payload }) => {
+  const { projectKey } = payload;
+  return await fetchStatuses(projectKey);
 });
 
 export const handler = resolver.getDefinitions();

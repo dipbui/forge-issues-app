@@ -30,7 +30,7 @@ settingsResolver.define("getProjectSetting", async ({ payload, context }) => {
     return { enabled: true };
   } catch (error) {
     console.error("Error getting project property:", error);
-    return { enabled: true }; // Fallback
+    return { enabled: true };
   }
 });
 

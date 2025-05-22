@@ -21,6 +21,8 @@ export async function fetchIssues(projectId, startAt = 0, maxResults = 50) {
         : "Unassigned",
       assigneeAccountId: issue.fields.assignee?.accountId || "",
       parentId: issue.fields.parent ? issue.fields.parent.id : null,
+      assigneeAvatarUrl: issue.fields.assignee?.avatarUrls["48x48"] || "",
+      statusIconUrl: issue.fields.status.iconUrl || "",
     })),
     total: data.total,
     startAt: data.startAt,

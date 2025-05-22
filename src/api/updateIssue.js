@@ -77,9 +77,7 @@ export async function updateIssue({ issueId, fields }) {
             ],
           },
         }),
-        ...(fields.assignee && {
-          assignee: { accountId: fields.assignee },
-        }),
+        assignee: fields.assignee ? { accountId: fields.assignee } : null,
       },
     };
 
@@ -93,8 +91,7 @@ export async function updateIssue({ issueId, fields }) {
       }
 
       const transitionsData = await transitionsResponse.json();
-      console.log("Available transitions:", transitionsData.transitions);
-
+      console.log("Available transitions:", transitionsData);
       const targetTransition = transitionsData.transitions.find(
         (t) => t.to.name.toLowerCase() === fields.status.toLowerCase()
       );

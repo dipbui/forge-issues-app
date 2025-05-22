@@ -39,10 +39,10 @@ permissions:
     - write:jira-work
     - manage:jira-configuration
     - manage:jira-project
-  external:
-    fetch:
-      backend:
-        - "https://*.atlassian.net"
+  # external:
+  #   fetch:
+  #     backend:
+  #       - "https://*.atlassian.net"
 resources:
   - key: main
     path: static/issues-app/build
